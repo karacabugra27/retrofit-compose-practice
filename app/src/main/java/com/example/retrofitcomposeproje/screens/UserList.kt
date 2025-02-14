@@ -3,6 +3,7 @@ package com.example.retrofitcomposeproje.screens
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,26 +18,31 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.retrofitcomposeproje.model.User
+import com.google.gson.Gson
 
 @Composable
-fun userList(userList: List<User>) {
+fun userList(userList: List<User>, navController: NavController) {
     LazyColumn(
         modifier = Modifier.fillMaxSize()
     ) {
         items(userList) {
-            userListRow(it)
+            userListRow(it, navController)
         }
     }
 }
 
 @Composable
-fun userListRow(user: User) {
+fun userListRow(user: User, navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .background(Color.LightGray)
             .border(BorderStroke(2.dp, Color.Black))
+            .clickable {
+                navController.navigate("detay_ekrani/${Gson().toJson(user)}")
+            }
             .padding(5.dp),
         horizontalAlignment = Alignment.Start
     ) {
